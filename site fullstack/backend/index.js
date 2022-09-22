@@ -20,7 +20,7 @@ app.get("/", (_, res) => {
 
         db.db("blog").collection("posts").find().toArray( function (err, results) {
             if (!err) {
-                // res.send(results);
+                res.send(results);
                 // console.log(results);
             }else{
                 console.log('error');
