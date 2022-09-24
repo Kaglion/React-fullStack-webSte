@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 export default function Layout({ children}) {
     const inputRef = useRef()
@@ -8,6 +8,7 @@ export default function Layout({ children}) {
     const toggleVisibility = () => collapse(!isCollapsed);
     const handleOnChange = e => console.log(e.targetValue);
     const handleOnSubmit = e => e.preventDefault();
+
     return(
     <>
         <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -35,7 +36,7 @@ export default function Layout({ children}) {
                 <button type="submit" className="btn btn-primary mb-5 float-end">Submit</button>
             </form>}
                 {children}
-            </div>
+            </div> 
         </>   
     )
 }

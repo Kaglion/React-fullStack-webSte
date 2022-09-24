@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient, ServerApiVersion } from 'mongodb-leagcy';
 
 dotenv.config();
 

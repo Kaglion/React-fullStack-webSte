@@ -1,5 +1,15 @@
 import React from "react"
+import { Link, useLocation } from "react-router-dom"
+import data from "../data";
 
 export default function Single() {
-    return(<p>Single Page</p>)
+    const params  =  useLocation();
+    const post = data.find(post => post._id === params?.state?.id);
+    return(
+    <>
+        <Link to='/'>back</Link>
+        <h1>{post?.title}</h1>
+        <p>{post?.content}</p>
+    </>
+    )
 }
