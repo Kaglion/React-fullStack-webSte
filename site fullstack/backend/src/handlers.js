@@ -1,6 +1,5 @@
 import { client } from "./MongoClient"
 
-
 const COLLECTION = "posts";
 
 module.exports = {
@@ -13,13 +12,15 @@ module.exports = {
         })
       })
     }, 
+    
     insertPost: (req, res) => {
       client(function(db) { 
-        db.collection(COLLECTION).insertOne(req.body, function(err, results) {
-          if(!err) {
-            res.status(200).send(results);
-          }
-        })
+        db.collection(COLLECTION).insertOne(req.body)
+        .then( () => db.collection(COLLECTION.find().toArray()))
+        .then( records => res.status(200).send(records) )
+        .catch( () => res
+                      .status(400) 
+                      .send(`Error fetching document from ${COLLECTION}`))
     })
   }
 }

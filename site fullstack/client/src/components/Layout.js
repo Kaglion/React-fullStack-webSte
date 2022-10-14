@@ -1,6 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useAppContext } from "../context";
 
 export default function Layout({ children}) {
+    const {addPost} = useAppContext()
+
     const inputRef = useRef()
     const textRef = useRef()
     const [isCollapsed, collapse] = useState(false)
@@ -8,6 +11,11 @@ export default function Layout({ children}) {
     const toggleVisibility = () => collapse(!isCollapsed);
     const handleOnChange = e => console.log(e.targetValue);
     const handleOnSubmit = e => e.preventDefault();
+
+
+     useEffect(() => {
+        addPost()
+     }, [addPost])
 
     return(
     <>

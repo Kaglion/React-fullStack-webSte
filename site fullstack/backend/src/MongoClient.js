@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
-import { MongoClient, ServerApiVersion } from 'mongodb-leagcy';
+import {  ServerApiVersion }  from 'mongodb';
+import { MongoClient } from 'mongodb-legacy';
 
-dotenv.config();
+dotenv.config(); 
 
 const uri = process.env.STRING_URI;
 const DATABASE = "blog";
