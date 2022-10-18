@@ -1,21 +1,54 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
+import {  useNavigate } from "react-router-dom";
 import { useAppContext } from "../context";
 
 export default function Layout({ children}) {
-    const {addPost} = useAppContext()
+
+    const {addPost,  fetchPosts} = useAppContext()
+    const [post, setPost] = useState({title: null, content: null})  
+
+    useEffect(() => {
+        fetchPosts();
+      }, [])
 
     const inputRef = useRef()
     const textRef = useRef()
     const [isCollapsed, collapse] = useState(false)
-  
+   
+    
     const toggleVisibility = () => collapse(!isCollapsed);
-    const handleOnChange = e => console.log(e.targetValue);
-    const handleOnSubmit = e => e.preventDefault();
 
+    const handleOnChange = e => {  setPost({...post, [e.target.name]: e.target.value})  };
+    const navigate = useNavigate();
+ 
 
-     useEffect(() => {
-        addPost()
-     }, [addPost])
+    const handleOnSubmit = e => {
+        e.preventDefault()
+        if(post.title != null || post.content != null ){
+            addPost(post);
+        }  
+        fetchPosts();
+        let title = post?.title.split(" ").join('-');
+        console.log(title);
+        // navigate(`/post/${title}`);
+
+        setPost({title: null, content: null});
+        inputRef.current.value = null;
+        textRef.current.value = null;
+        toggleVisibility(false);
+        // window.location.reload()
+        
+    }
+
+  
+      
+    
+    const isValid = useMemo(() => {
+        return (
+            Object.values(post).some(value => !value)
+        ) 
+    },[post])
+ 
 
     return(
     <>
@@ -35,13 +68,13 @@ export default function Layout({ children}) {
                 </div>
             </div>
             </nav>
-            <div className="layout">
+            <div className="layout container">
             <button className="btn btn-dark float-end" onClick={toggleVisibility}>{isCollapsed ? 'Close' : 'Add +'}</button>
             {isCollapsed && 
             <form className="mt-5" onSubmit={handleOnSubmit}>
                 <input ref={inputRef} type="text" name="title" className="form-control mb-3" id="exampleInputEmail1" onChange={handleOnChange} aria-describedby="emailHelp" placeholder="title" />
                 <textarea ref={textRef} name="content" rows="4"  className="form-control mb-3" onChange={handleOnChange} placeholder="content"></textarea>
-                <button type="submit" className="btn btn-primary mb-5 float-end">Submit</button>
+                <button type="submit"  className="btn btn-primary mb-5 float-end" disabled = {isValid} >Submit</button>
             </form>}
                 {children}
             </div> 

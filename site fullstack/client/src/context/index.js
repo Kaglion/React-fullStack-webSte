@@ -11,10 +11,11 @@ const AppProvider = ({children}) => {
     const fetchPosts = () => {
         getPosts().then(setPosts)
     }
+
     const addPost = (body) => {
         insertPost(body).then(setPosts)
-    }
-    
+    } 
+
     // console.log( getPosts());
 
     const value = useMemo(() => {
@@ -23,7 +24,7 @@ const AppProvider = ({children}) => {
             fetchPosts,
             addPost
         }
-    }, [posts])
+    }, [posts, fetchPosts, addPost])
 
     return <Provider value={value}>{children}</Provider>
 }

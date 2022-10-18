@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import "./App.css";
@@ -11,7 +11,7 @@ const {fetchPosts} = useAppContext()
 
 
 useEffect(() => {
-  fetchPosts()
+  fetchPosts();
 }, [])
 
 
@@ -20,7 +20,7 @@ useEffect(() => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/post/:title" element={<Single />} />
+          <Route path="/post/:title" element={<Single />} /> 
         </Routes> 
     </Layout> 
   </Router>
